@@ -1,0 +1,28 @@
+{
+  "name": "text_adventure2.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server --ignore client",
+    "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Giovanne-Villanueva/Text_Adventure2.0.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Giovanne-Villanueva/Text_Adventure2.0/issues"
+  },
+  "homepage": "https://github.com/Giovanne-Villanueva/Text_Adventure2.0#readme",
+  "dependencies": {
+    "concurrently": "^8.2.1"
+  }
+}
