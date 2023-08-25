@@ -1,8 +1,15 @@
 const { gql } = require('apollo-server-express');
 
+
 const typeDefs = gql`
-type checkout {
-    session: ID
+type PaymentResult {
+    success: Boolean!
+    paymentIntentID: String
+    error: String
+}
+
+type Mutation {
+    processPayment(amount: Int!): PaymentResult!
 }
 `;
 
