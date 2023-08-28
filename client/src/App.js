@@ -8,8 +8,25 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard'
+import { AdventureProvider } from './utils/GlobalState';
+
+
 const httpLink = createHttpLink({
   uri: '/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
 });
 
 const client = new ApolloClient({
@@ -18,7 +35,34 @@ const client = new ApolloClient({
 });
 
 function App() {
-
+  return(
+    <ApolloProvider client={client}>
+        <Router>
+          <div>
+            <AdventureProvider>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<Home />} 
+                />
+                <Route
+                  path="/dashboard"
+                  element={<Dashboard />} 
+                />
+                <Route
+                  path="/login"
+                  element={<Login />} 
+                />
+                <Route
+                  path="/signup"
+                  element={<Signup />} 
+                />
+              </Routes>
+            </AdventureProvider>
+          </div>
+        </Router>
+    </ApolloProvider>
+  );
 };
 
 export default App;

@@ -7,13 +7,17 @@ const { populate } = require('../models/User');
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
-      const user = await User.findById(context.user.id).populate({
-        populate: 'story',
-        populate: 'equipment',
-        populate: 'character'
-      });
+      if(context.user) {
+        const user = await User.findById(context.user.id).populate({
+          populate: 'story',
+          populate: 'equipment',
+          populate: 'character'
+        });
 
-      return user;
+        return user;
+      }
+      
+      throw new AuthenticationError('Not logged in');
     },
     characters: async () => {
       return await Character.find({}).populate('stats');

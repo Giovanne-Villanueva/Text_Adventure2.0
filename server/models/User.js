@@ -20,12 +20,10 @@ const userSchema = new Schema(
       required: true,
       minlength: 8
     },
-    stories: [
-      {
+    stories: {
         type: Schema.Types.ObjectId,
         ref: 'story'
-      }
-    ],
+    },
     equipment_id: [
       {
         type: Schema.Types.ObjectId,

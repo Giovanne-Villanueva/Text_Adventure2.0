@@ -5,9 +5,9 @@ const typeDefs = gql`
     _id: ID
     name: String
     email: String
-    stories: [Story]
+    stories: Story
     equipment_id: [Equipment]
-    character: [Character]
+    characters: [Character]
   }
 
   type Character {
