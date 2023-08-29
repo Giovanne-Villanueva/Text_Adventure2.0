@@ -9,13 +9,13 @@ const resolvers = {
                 });
 
                 return {
-                    success: `true`,
+                    success: true,
                     paymentIntentID: paymentIntent.id,
                 };
             } catch (error) {
                 console.error(error);
                 return {
-                    success: `false`,
+                    success: false,
                     error: error.message,
                 };
             }
@@ -24,11 +24,6 @@ const resolvers = {
    
     };
 
-    const server = new ApolloServer ({ typeDefs, resolvers});
-
-    server.listen().then(({url}) => {
-        console.log(`Server ready at ${url}`);
-    });
-
+   
 
 module.exports = resolvers

@@ -8,6 +8,10 @@ type PaymentResult {
     error: String
 }
 
+type Query {
+    hello: String
+}
+
 type Mutation {
     processPayment(amount: Int!): PaymentResult!
 }
