@@ -1,0 +1,94 @@
+[
+    {
+      "choice": "Honk angirly",
+      "effect": "Neutral",
+      "chosen": true
+    },
+    {
+        "choice": "Recede into the woods",
+        "effect": "Negative",
+        "chosen": true
+      },
+      {
+        "choice": "Ransack the vehicle",
+        "effect": "Positive",
+        "chosen": true
+      },{
+        "choice": "Waddle over to the inn and eatery",
+        "effect": "Neutral",
+        "chosen": true
+      },{
+        "choice": "Cozy…too cozy? Run away!",
+        "effect": "Neutral",
+        "chosen": true
+      },{
+        "choice": "Lie there like goose-droppings?",
+        "effect": "Negative",
+        "chosen": true
+      },{
+        "choice": "drag muddy body up",
+        "effect": "Neutral",
+        "chosen": true
+      },{
+        "choice": "Attack",
+        "effect": "Negative",
+        "chosen": true
+      },{
+        "choice": "Run",
+        "effect": "Negative",
+        "chosen": true
+      },{
+        "choice": "Escape before it is too late",
+        "effect": "Negative",
+        "chosen": true
+      },{
+        "choice": "Stay still as a bread loaf",
+        "effect": "Neutral",
+        "chosen": true
+      },{
+        "choice": "Join the foxes",
+        "effect": "Neuttral",
+        "chosen": true
+      },{
+        "choice": "Decline to join",
+        "effect": "Negative",
+        "chosen": true
+      },{
+        "choice": "Stand still",
+        "effect": "Neutral",
+        "chosen": true
+      },{
+        "choice": "Grab money, and vamoose",
+        "effect": "Negative",
+        "chosen": true
+      },{
+        "choice": "Beguile the fox with answer…",
+        "effect": "Neutral",
+        "chosen": true
+      },{
+        "choice": "Save the Stooges",
+        "effect": "Neutral",
+        "chosen": true
+      },
+      {
+        "choice": "Milk it...",
+        "effect": "Neutral",
+        "chosen": true
+      },{
+        "choice": "Loyalty",
+        "effect": "Negative",
+        "chosen": true
+      },{
+        "choice": "Humble pie",
+        "effect": "Negative",
+        "chosen": true
+      },{
+        "choice": "Nothing",
+        "effect": "Positive",
+        "chosen": true
+      },{
+        "choice": "love",
+        "effect": "Negative",
+        "chosen": true
+      }
+]
