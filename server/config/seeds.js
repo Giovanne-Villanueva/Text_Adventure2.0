@@ -1,5 +1,5 @@
 const db = require('./connection');
-const {User, Choice, Equipment, index, Stats, Story } = ('./models');
+const {User, Choice, Equipment, Index, Stats, Story } = ('./models');
 
 db.once('open', async () => {
     await addData.deleteMany();
@@ -13,6 +13,14 @@ db.once('open', async () => {
 // or is it insertMany ?
 const users = await User.insertOne()
 
-const choices = await Choices.InsertMany([
+const choices = await Choices.insertMany([
 
 ])
+
+const indices = Index.insertMany([]
+
+)
+
+const stats = Stats.insertMany([])
+
+const stories = Story.insertMany([])
