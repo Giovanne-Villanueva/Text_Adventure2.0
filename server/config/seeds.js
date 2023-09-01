@@ -1,10 +1,10 @@
 const db = require('./connection');
-const {} =('./models');
+const {User, Choice, Equipment, index, Stats, Story } =('./models');
 
 db.once('open', async () => {
-    await addInfoHere.deleteMany();
+    await addData.deleteMany();
 
-    const addInfo = await addInfoHere.insertmany([
+    const addData = await addInfoHere.insertmany([
 
     ])
     console.log('Seed Data Added');
