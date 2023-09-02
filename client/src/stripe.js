@@ -1,3 +1,5 @@
+const { default: Stripe } = require("stripe");
+
 document.addEventListener("DOMContentLoaded", function(){
     const form = document.getElementById('payment-form');
 
@@ -6,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
         const amount = parseInt(document.getElementById('donation-amount').value);
 
+        const stripe = Stripe('pk_test_51Ni6hkDivUUAA9Sw4ywYxKtI1SlrO9vjzzxoRX5nKG6JhTAV9dJhdQT5yDInrJFYnrE4re5GAkpqIWcJcdJPJ3J700eDAigjpN');
         const response = await fetch ('/graphql', {
             method: 'POST',
             headers: {
@@ -27,8 +30,16 @@ document.addEventListener("DOMContentLoaded", function(){
             }),
         });
         const responseData = await response.json();
+
         if (responseData.data.processPayment.success) {
-            console.log('Payment successful', responseData.data.processPayment.paymentIntentID);
+            const paymentIntent = responseData.data.processPayment.paymentIntentID;
+
+            const { error } = await stripe.redirectToCheckout({
+                sessionID: paymentIntent
+            });
+            if (error) {
+                console.error('Error redirecting to Stripe checkout:', error);
+            }
         } else {
             console.error('Payment error:', responseData.data.processPayment.error);
         }

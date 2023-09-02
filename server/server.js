@@ -1,11 +1,12 @@
 const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
-
 const path = require('path');
 const typeDefs = require('./schemas/typeDefs')
 const resolvers = require ('./schemas/resolvers')
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'server')))
 
 const server = new ApolloServer({
     typeDefs,
