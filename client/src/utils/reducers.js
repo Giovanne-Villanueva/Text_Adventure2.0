@@ -2,7 +2,9 @@ import { useReducer } from 'react';
 
 import {
   DELETE_CHARACTER,
-  UPDATE_USER
+  ADD_CHARACTER,
+  UPDATE_USER,
+  UPDATE_STORY
 } from './actions'
 
 export const reducer = (state, action) => {
@@ -10,8 +12,23 @@ export const reducer = (state, action) => {
     case UPDATE_USER:
       return {
         ...state,
-        user: [...action.user]
+        user: action.user
       };
+    case ADD_CHARACTER: 
+      return {
+        ...state,
+        user: 
+          {
+            ...state.user,
+            characters: action.characters._id
+          } ,
+        characters: action.characters
+      }
+      case UPDATE_STORY: 
+      return {
+        ...state,
+        stories: action.stories
+      }
     case DELETE_CHARACTER:
       return{
         ...state,

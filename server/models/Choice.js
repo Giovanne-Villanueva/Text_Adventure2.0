@@ -11,6 +11,10 @@ const choiceSchema = new Schema(
     effect: {
       type: String,
       required: true
+    },
+    next_tale:{
+      type: Schema.Types.ObjectId,
+      ref: 'story'
     }
   }
 );

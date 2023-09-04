@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const choice = require('./Choice')
 const { Schema } = mongoose;
 
 const storySchema = new Schema(
@@ -8,13 +7,16 @@ const storySchema = new Schema(
       type: String,
       required: true
     },
-    choices: [ choice.schema ],
-    next_tale: [
+    choices: [ 
       {
         type: Schema.Types.ObjectId,
-        ref: 'story'
-      }
-    ]
+        ref: 'choice'
+      } 
+    ],
+    first:{
+      type:Boolean,
+      default: false
+    }
   }
 );
 

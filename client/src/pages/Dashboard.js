@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 import { useAdventureContext } from '../utils/GlobalState';
@@ -12,17 +12,19 @@ import { idbPromise } from '../utils/helpers';
 
 const Dashboard = () => {
   const [state, dispatch] = useAdventureContext();
-  const { id } = useParams();
 
   const [userData, setUserData] = useState({});
 
-  const { loading, data } = useQuery(QUERY_USER);
+  const {loading, data } = useQuery(QUERY_USER);
 
-  const {characters, stories, user} = state
+  const {user} = state
+
 
   useEffect(() => {
-    if(user.name){
-      setUserData(user.findById(id) );
+    if(Object.hasOwn(state.user, 'name') ){
+      console.log('I got here')
+      console.log(user)
+      setUserData(user);
     }
     else if (data) {
       dispatch({
@@ -30,42 +32,40 @@ const Dashboard = () => {
         user: data.user
       });
 
-      data.user((user) => {
-        idbPromise('user', 'put', user);
-      });
+      idbPromise('user', 'put', (data.user));
     }
-    else if (!loading) {
-      idbPromise('user', 'get').then((indexedUser) => {
-        dispatch({
-          type: UPDATE_USER,
-          products: indexedUser,
-        });
-      });
-    }
-  }, [user, data, loading, dispatch, id]);
 
-  const deleteChracter = () => {
+  }, [state.user, data, dispatch]);
+
+  const deleteCharacter = () => {
     dispatch({
       type: DELETE_CHARACTER,
       _id: userData.characters._id
     });
-    idbPromise('characters', 'delete', {...(userData.characters)})
+    idbPromise('characters', 'delete', userData.characters)
   }
 
+  const continueAdventure = () => {
+    if(user.stories._id){
+      <div>
+        <h3>Current Adventuer</h3>
+        <img></img>
+        <Link to={`/adventuer/${user.stories._id}`} className='continue'>Continue</Link>
+        <button className='delete' onClick={deleteCharacter}>Delete</button>
+      </div>
+    }
+  }
 
+  
   return(
   <div>
     <h2>Welcome, {user.name}!</h2>
-    <div>
-      <h3>Current Adventuer</h3>
-      <div>
-        <img></img>
-        <Link to={`/adventuer/${user.stories._id}`} className='continue'>Continue</Link>
-        <button className='delete' onClick={deleteChracter}>Delete</button>
-      </div>
-    </div>
+      
+    {continueAdventure}
+
     <p>Just a warning if you begin a new story your current saved story will be lost</p>
-    
+    <Link to={"/newCharacter"}>Start a new Adventuer</Link>
+
   </div>
   );
 };

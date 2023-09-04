@@ -16,7 +16,6 @@ function Login(props) {
       });
       const token = mutationResponse.data.login.token;
       Auth.login(token);
-      <Link to="/dashboard">Dashboard</Link>
     } catch (e) {
       console.log(e);
     }

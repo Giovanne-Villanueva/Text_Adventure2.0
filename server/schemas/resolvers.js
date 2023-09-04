@@ -2,28 +2,28 @@ const { AuthenticationError } = require('apollo-server-express');
 const { User, Character, Story, Stats, Choice, Equipment} = require('../models');
 const { signToken } = require('../utils/auth');
 const { populate } = require('../models/User');
+const { default: mongoose } = require('mongoose');
 //const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
       if(context.user) {
-        const user = await User.findById(context.user.id).populate({
-          populate: 'story',
-          populate: 'equipment',
-          populate: 'character'
-        });
+        const user = await User.findById(context.user._id).populate('stories').
+        populate('equipment').
+        populate('characters').
+        populate('user_stats');
 
         return user;
       }
-      
+
       throw new AuthenticationError('Not logged in');
     },
     characters: async () => {
-      return await Character.find({}).populate('stats');
+      return await Character.find({}).populate('ch_stats');
     },
     character: async (parent, { _id }) => {
-      return await Character.findById(_id).populate('stats')
+      return await Character.findById(_id).populate('ch_stats')
     },
     equipments: async () => {
       return await Equipment.find({}).populate('stats')
@@ -31,16 +31,30 @@ const resolvers = {
     equipment: async(parent, {_id}) => {
       return await Equipment.findById(_id).populate('stats')
     },
+    stories: async () => {
+      return await Story.find({}).populate('choices').populate({
+        path:'choices',
+        populate:'next_tale'
+      })
+    },
+    firstStory: async () => {
+      return await Story.findOne({first:true}).populate('choices').populate({
+        path:'choices',
+        populate:'next_tale'
+      });
+    },
     story: async (parent, {_id}) => {
-      return await Story.findById(_id).populate({
-        populate: 'story',
-        populate: 'choice'
+
+      return await Story.findById(_id).populate('choices').populate({
+        path:'choices',
+        populate:'next_tale'
       })
     }
   },
   Mutation: {
     addUser: async (parent, args) => {
-      const user = await User.create(args);
+      //let stories_id = mongoose.Types.ObjectId('64f100e5922340b6835bf619');
+      const user = await User.create({...args, stories: '64f100e5922340b6835bf619'});
       const token = signToken(user);
 
       return { token, user };
@@ -51,39 +65,42 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in')
     },
-    addcharacter: async (parent, args, context) => {
-      console.log(context)
+    addUserCharacter: async (parent, {characters, user_stats}, context) => {
       if(context.user){
-        const newcharacter = await Character.create( args );
-        return newcharacter;
+        return await User.findByIdAndUpdate(context.user._id, { characters: characters, user_stats: user_stats}, {new: true });
       }
-
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError('Not logged in')
     },
-    removeCharacter: async (parent, args, context) => {
-      if (context.user){
-        const characterData = await Character.findOneAndDelete({
-          _id: args
-        })
-
-        return characterData;
-      }
-    },
-    updateCharacter: async (parent, args, context) => {
+    updateUserStory: async (parent, {stories}, context) => {
       if(context.user){
-        return await Character.findByIdAndUpdate(context.user._id, args, { new: true });
+        return await User.findByIdAndUpdate(context.user._id, {stories: stories}, {new: true }).populate('equipment').
+        populate('characters').populate('user_stats');
       }
+      throw new AuthenticationError('Not logged in')
+    },
+    addCharacter: async (parent, args) => {
 
-      throw new AuthenticationError('Not logged in');
+      const newcharacter = await Character.create( args );
+      return newcharacter;
+
+    },
+    removeCharacter: async (parent, args) => {
+
+      const characterData = await Character.findOneAndDelete({
+        _id: args
+      })
+
+      return characterData;
+    },
+    updateCharacter: async (parent, {characterId, healthpoints}) => {
+
+      return await Character.findByIdAndUpdate( characterId, {healthpoints:healthpoints}, { new: true });
     },
     addStats: async (parent, args, context) => {
 
-      if(context.user){
-        const newStats = await Stats.create( args );
-        return newStats;
-      }
-
-      throw new AuthenticationError('Not logged in');
+      const newStats = await Stats.create( args );
+      return newStats;
+      
     },
     removeStats: async (parent, args, context) => {
       if (context.user){
@@ -101,30 +118,28 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    addStory: async (parent, args, context) => {
+    addStory: async (parent, args) => {
 
-      if(context.user){
-        const newStory = await Story.create( args );
-        return newStory;
-      }
+      const newStory = await Story.create( args );
+      return newStory;
 
-      throw new AuthenticationError('Not logged in');
     },
     removeStory: async (parent, args, context) => {
-      if (context.user){
-        const storyData = await Story.findOneAndDelete({
-          _id: args
-        })
 
-        return storyData;
-      }
+      const storyData = await Story.findOneAndDelete({
+        _id: args
+      })
+
+      return storyData;
     },
-    updateStory: async (parent, args, context) => {
-      if(context.user){
-        return await Story.findByIdAndUpdate(context.user._id, args, { new: true });
-      }
+    updateStoryChoices: async (parent, args) => {
 
-      throw new AuthenticationError('Not logged in');
+        return await Story.findByIdAndUpdate(
+          args.storyId,
+          {
+            $addToSet: {choices: args.choices}, 
+          }, 
+          { new: true });
     },
     addEquipment: async (parent, args, context) => {
 
@@ -151,30 +166,29 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    addChoice: async (parent, args, context) => {
+    addChoice: async (parent, args) => {
 
-      if(context.user){
-        const newChoice = await Choice.create( args );
-        return newChoice;
-      }
+      const newChoice = await Choice.create( args );
+      return newChoice;
 
-      throw new AuthenticationError('Not logged in');
     },
-    removeChoice: async (parent, args, context) => {
-      if (context.user){
-        const choiceData = await Choice.findOneAndDelete({
-          _id: args
-        })
+    removeChoice: async (parent, args) => {
+      
+      const choiceData = await Choice.findOneAndDelete({_id: args})
+      return choiceData;
 
-        return choiceData;
-      }
     },
-    updateChoice: async (parent, args, context) => {
-      if(context.user){
-        return await Choice.findByIdAndUpdate(context.user._id, args, { new: true });
-      }
+    updateChoice: async (parent, args,) => {
+      
+      return await Choice.findByIdAndUpdate(
+        args.choiceId, 
+        {
+          /*option: args.option,
+          effect: args.effect,*/
+          next_tale: args.next_tale,
+        },
+        { new: true });
 
-      throw new AuthenticationError('Not logged in');
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });

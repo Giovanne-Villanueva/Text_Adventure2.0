@@ -12,6 +12,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard'
+import NewCharacter from './pages/NewCharacter'
+import Adventure from './pages/Adventure';
 import { AdventureProvider } from './utils/GlobalState';
 
 
@@ -48,6 +50,14 @@ function App() {
                 <Route
                   path="/dashboard"
                   element={<Dashboard />} 
+                />
+                <Route
+                  path="/newCharacter"
+                  element={<NewCharacter />} 
+                />
+                <Route
+                  path="/adventure"
+                  element={<Adventure />} 
                 />
                 <Route
                   path="/login"

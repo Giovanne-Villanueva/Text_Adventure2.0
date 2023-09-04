@@ -1,3 +1,6 @@
 export const UPDATE_USER = "UPDATE_USER"
 
 export const DELETE_CHARACTER = "DELETE_CHARACTER"
+export const ADD_CHARACTER = "ADD_CHARACTER"
+
+export const UPDATE_STORY = "UPDATE_STORY"

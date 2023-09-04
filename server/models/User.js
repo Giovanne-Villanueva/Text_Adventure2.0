@@ -24,18 +24,21 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'story'
     },
-    equipment_id: [
+    equipment: [
       {
         type: Schema.Types.ObjectId,
         ref:'equipment'
       }
     ],
-    characters: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Character'
-      }
-    ]
+    characters:{
+      type: Schema.Types.ObjectId,
+      ref: 'character'
+    },
+    user_stats: {
+      type:Schema.Types.ObjectId,
+      ref:'stats'
+    }
+    
   }
 );
 

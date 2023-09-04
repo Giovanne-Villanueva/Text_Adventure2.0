@@ -11,7 +11,7 @@ export function idbPromise(storeName, method, object) {
     let db, tx, store;
     request.onupgradeneeded = function(e) {
       const db = request.result;
-      db.createObjectStore('user', { keyPath: '_id' });
+      db.createObjectStore('user', { keyPath: 'name' });
       db.createObjectStore('characters', { keyPath: '_id' });
       db.createObjectStore('stories', { keyPath: '_id' });
       db.createObjectStore('equipment', { keyPath: '_id' });
@@ -39,6 +39,12 @@ export function idbPromise(storeName, method, object) {
           const all = store.getAll();
           all.onsuccess = function() {
             resolve(all.result);
+          };
+          break;
+        case 'getSingle':
+          const single = store.get(object.name);
+          single.onsuccess = function() {
+            resolve(single.result);
           };
           break;
         case 'delete':
