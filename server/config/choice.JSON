@@ -3,7 +3,8 @@
     "_id": "1",
     "choice": "Honk angirly",
     "effect": "Neutral",
-    "chosen": true
+    "chosen": true,
+    "next_tale":"storyId"
   },
   {
     "_id": "2",

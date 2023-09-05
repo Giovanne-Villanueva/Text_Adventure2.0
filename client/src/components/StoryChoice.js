@@ -85,9 +85,7 @@ function StoryChoice ({choice}, player) {
   }
   //console.log(user)
   return(
-    <div> 
-      <button onClick={() => handleNextStory(choice)}>{choice.option}</button>
-    </div>
+      <button className='sm:w-10/12 p-2 rounded-md my-3 bg-cyan-700 btn' onClick={() => handleNextStory(choice)}>{choice.option}</button>
   );
 
 }

@@ -95,13 +95,15 @@ export const UPDATE_USER_CHARACTER = gql`
 export const EDIT_USER =gql`
   mutation updateUser(
     $stories:ID, 
-    $equipment_id:ID, 
+    $equipment:ID, 
     $characters: ID
+    $user_stats: ID
   ) {
     updateUser(
       stories: $stories, 
-      equipment_id: $eqipment_id, 
+      equipment: $equipment, 
       characters: $characters
+      user_stats: $user_stats
     ) {
       name
       stories {

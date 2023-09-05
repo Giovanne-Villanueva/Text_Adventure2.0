@@ -17,6 +17,7 @@ const Adventure = () => {
   const [state, dispatch] = useAdventureContext();
 
   const [currentStory, setCurrentStory] = useState({})
+  const [currentUser, setCurrentUser] = useState({})
 
   const userData = useQuery(QUERY_USER);
   const [getStory, {data, loading}] = useLazyQuery(QUERY_STORY);
@@ -27,7 +28,8 @@ const Adventure = () => {
   const {user, stories}=state;
   
   useEffect(()=>{
-
+    
+  
     if (userData.data) {
       dispatch({
         type: UPDATE_USER,
@@ -37,7 +39,7 @@ const Adventure = () => {
       idbPromise('user', 'put', (userData.data.user));
     }
 
-  }, [userData.data, dispatch]);
+  }, [user, userData.data, dispatch]);
 
   useEffect(()=>{
     if(stories._id){
@@ -57,6 +59,7 @@ const Adventure = () => {
     
     if(user){
       if(user.stories){
+        setCurrentUser(user)
         if(user.stories._id){
           getStory({
             variables:{_id:user.stories._id}
@@ -64,6 +67,7 @@ const Adventure = () => {
         }
       }
       else if(user.name){
+        setCurrentUser(user)
         getFirstStory();
       }
     }
@@ -98,11 +102,14 @@ const Adventure = () => {
   if(currentStory.choices){
     //console.log(currentStory.choices)
     return(
-      <div>
-        <p>{currentStory.tale}</p>
-        { currentStory.choices.map((choice) =>(
-          <StoryChoice key={choice._id} choice={choice} player={user}/>
-        ))}
+      <div className='container mx-auto grid grid-cols-2 rounded-md my-10 p-2'>
+        <p className='col-span-2 m-5'>{currentStory.tale}</p>
+        <img className='ml-2 sm:ml-14 lg:ml-16 col-span-2 sm:col-span-1' src={`/images/${currentUser.characters.character_name}.jpg`} ></img>
+        <div className='flex flex-col flex-wrap justify-between btn-grid w-full mx-2'>
+          { currentStory.choices.map((choice) =>(
+            <StoryChoice key={choice._id} choice={choice} player={user}/>
+          ))}
+        </div>
       </div>
     )
   }
@@ -112,8 +119,9 @@ const Adventure = () => {
     )
   }
   return(
-    <div>
-      <p>{currentStory.tale}</p>
+    <div className='container mx-auto grid grid-cols-2 rounded-md my-10 p-2'>
+      <p className='col-span-2 m-5'>{currentStory.tale}</p>
+      <img className='ml-2 sm:ml-14 lg:ml-16 col-span-2 sm:col-span-1'></img>
     </div>
   )
 }

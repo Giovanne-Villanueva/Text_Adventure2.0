@@ -47,6 +47,10 @@ const typeDefs = gql`
     next_tale: Story
   }
 
+  type Checkout {
+    session: ID
+  }
+
   type Auth {
     token: ID
     user: User
@@ -61,11 +65,12 @@ const typeDefs = gql`
     firstStory: Story
     stories: [Story]
     story( _id: ID!): Story
+    checkout(donationPrice: Int): Checkout
   }
 
   type Mutation {
     addUser(name: String!, email: String!, password: String!): Auth
-    updateUser(name: String, email: String, password: String, stories:ID, equipment_id:ID, characters: ID):User
+    updateUser(name: String, email: String, password: String, stories:ID, equipment:ID, characters: ID, user_stats: ID):User
     addUserCharacter(characters: ID!, user_stats:ID!):User
     updateUserStory(stories: ID!):User
     updateUserCharacter(user_stats: ID!):User

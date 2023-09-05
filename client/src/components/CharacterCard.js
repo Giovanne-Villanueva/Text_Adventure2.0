@@ -35,20 +35,20 @@ function CharacterCard ({ character }) {
   }
 
   return (
-    <div>
-        <div>
-          <h3>
-            <img />
+    <div className='flex flex-col flex-wrap justify-center content-center mt-2 md:flex-row'>
+        <div className='flex flex-col content-center md:w-2/6 md:mx-6'>
+          <h2>
+            <img src={`/images/${character.character_name}.jpg`} />
             {character.character_name}
-          </h3>
-          <ul>
-          <li >Characters Starting healthpoints: {character.healthpoints}</li>
-          <li >Hp Stat: {character.ch_stats.hp}</li>
-          <li >Attack Stat: {character.ch_stats.attack}</li>
-          <li >Defense Stat: {character.ch_stats.defense}</li>
-          <li >Agility Stat: {character.ch_stats.agility}</li>
+          </h2>
+          <ul className='flex flex-col text-sm sm:text-base md:text-lg'>
+            <li className='block w-full'>Characters Starting healthpoints: {character.healthpoints}</li>
+            <li className='block w-full'>Hp Stat: {character.ch_stats.hp}</li>
+            <li className='block w-full'>Attack Stat: {character.ch_stats.attack}</li>
+            <li className='block w-full'>Defense Stat: {character.ch_stats.defense}</li>
+            <li className='block w-full'>Agility Stat: {character.ch_stats.agility}</li>
         </ul>
-        <button  onClick={() => chosenCharacter(character)}  type="button">Choose</button>
+        <button className='w-full p-2 my-4 rounded-md bg-cyan-700' onClick={() => chosenCharacter(character)}  type="button">Choose</button>
         </div>
     </div>
   );

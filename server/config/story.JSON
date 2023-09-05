@@ -2,7 +2,8 @@
   {
     "_id": "1",
     "tale": "... WheezyGoose wakes up under a tree, rain drizzling onto his bill, his head pounding from honking all night at the pond, and the ground feels like its rumbling as the blood sloshes back and forth in his head. No, that is not his head, but wheels turning over the stone road toward where he lies blinking up into the light filtering down through the leaves. As the vehicle closes into view, its driver turns his short, human neck, then quickly twists up his countenance, and glares down his nose at `{$user.name}` as if Wheezy was nothing but a common gutter bird, a cooped-up, wing-clipped, honk-aholic. What should Wheezy do?",
-    "first":true
+    "first":true,
+    "choice":["1", "2"]
   },
   {
     "_id":"2",

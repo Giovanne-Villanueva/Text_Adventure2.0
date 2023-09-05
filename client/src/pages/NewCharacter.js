@@ -33,7 +33,7 @@ function NewCharacter() {
 
   return(
     <div>
-      <h3>Choose A Character:</h3>
+      <h2 className='text-base sm:text-xl md:text-2xl' >Choose A Character:</h2>
       {characterData.map((character) =>( 
         <CharacterCard key={character._id} character={character} />
       ))}

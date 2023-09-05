@@ -17,15 +17,27 @@ const Dashboard = () => {
   const [userData, setUserData] = useState({});
 
   const {loading, data } = useQuery(QUERY_USER);
+  const [ editUser ] = useMutation(EDIT_USER)
 
   const {user} = state
 
 
   useEffect(() => {
-    if(Object.hasOwn(state.user, 'name') ){
-      //console.log('I got here')
-      //console.log(user)
-      setUserData(user);
+    if(user){
+      if(user.name){
+        //console.log('I got here')
+        //console.log(user)
+        setUserData(user);
+      }
+      else if(data){
+        dispatch({
+          type: UPDATE_USER,
+          user: data.user
+        });
+  
+        idbPromise('user', 'put', (data.user));
+        return
+      }
     }
     else if (data) {
       dispatch({
@@ -34,29 +46,40 @@ const Dashboard = () => {
       });
 
       idbPromise('user', 'put', (data.user));
+      return
     }
 
-  }, [state.user, data, dispatch]);
+  }, [ user, data, dispatch]);
 
-  const deleteCharacter = () => {
-    dispatch({
-      type: DELETE_CHARACTER,
-      _id: userData.characters._id
-    });
-    idbPromise('characters', 'delete', userData.characters)
+  const deleteCharacter = async () => {
+    if(user.characters){
+      const mutationResponse = await editUser({
+        variables:{ stories:null, equipment:null, characters:null, user_stats:null}
+      })
+      if(mutationResponse){
+        console.log(mutationResponse)
+        dispatch({
+          type: UPDATE_USER,
+          user: mutationResponse.data.updateUser
+        });
+  
+        idbPromise('user', 'put', (mutationResponse.data.updateUser))
+      }
+      setUserData(user)
+    }
   }
 
   const continueAdventure = () => {
     
-    if(user){
-      console.log(user)
-      if(user.stories){
+    if(userData){
+      //console.log(userData)
+      if(userData.stories){
         return(
           <div>
             <h3>Current Adventuer</h3>
             <img></img>
-            <Link to={`/adventure`} className='continue'>Continue</Link>
-            <button className='delete' onClick={deleteCharacter}>Delete</button>
+            <Link to={`/adventure`} className='continue w-full sm:w-1/2 md:w-1/3 xl:w-1/4 p-2 rounded-md my-3 mr-2 bg-cyan-700'>Continue</Link>
+            <button className='delete w-full sm:w-max p-2 rounded-md my-3 mx-2 bg-cyan-700' onClick={deleteCharacter}>Delete</button>
           </div>
         )
       }
@@ -64,15 +87,20 @@ const Dashboard = () => {
     }
   }
 
+  if(!userData){
+    return(
+      <div>... Loading</div>
+    )
+  }
 
   return(
-  <div>
-    <h2>Welcome, {user.name}!</h2>
+  <div className='flex flex-wrap flex-col ml-4'>
+    <h2 className='text-center text-base sm:text-xl md:text-2xl'>Welcome, {userData.name}!</h2>
       
     {continueAdventure()}
 
-    <p>Just a warning if you begin a new story your current saved story will be lost</p>
-    <Link to={"/newCharacter"}>Start a new Adventuer</Link>
+    <p className="text-base sm:text-xl md:text-xl mt-10">Just a warning if you begin a new story your current saved story will be lost</p>
+    <Link className='sm:w-1/2 md:w-max xl:w-fit p-2 rounded-md my-3 bg-cyan-700' to={"/newCharacter"} onClick={deleteCharacter}>Start a new Adventuer</Link>
 
   </div>
   );

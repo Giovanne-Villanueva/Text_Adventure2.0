@@ -2,8 +2,8 @@ const { AuthenticationError } = require('apollo-server-express');
 const { User, Character, Story, Stats, Choice, Equipment} = require('../models');
 const { signToken } = require('../utils/auth');
 const { populate } = require('../models/User');
-const { default: mongoose } = require('mongoose');
-//const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
+const stripe = require('stripe')('sk_test_51Ni6hkDivUUAA9SwJSng7BgvzVOfcNQe0tMJ1x3QluM7iFD4eH7DvflcF9IrlGhVVInyrCeL7Jl1bPbNaBTm1xqY001OnQKfMX');
 
 const resolvers = {
   Query: {
@@ -49,6 +49,36 @@ const resolvers = {
         path:'choices',
         populate:'next_tale'
       })
+    },
+    checkout: async (parent, {donationPrice}, context)=>{
+      const url = new URL(context.headers.referer).origin;
+      const line_items = [];
+
+      const donation = await stripe.products.create({
+        name: "donation",
+        description: "Thank you for supporting Text Adventure2.0"
+      });
+
+      const price = await stripe.prices.create({
+        product: donation.id,
+        unit_amount: (donationPrice
+          *100),
+        currency: 'usd'
+      })
+
+      line_items.push({
+        price: price.id,
+        quantity: 1
+      });
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/`
+      });
+      return { session: session.id };
     }
   },
   Mutation: {
@@ -61,7 +91,8 @@ const resolvers = {
     },
     updateUser: async (parent, args, context) => {
       if(context.user){
-        return await User.findByIdAndUpdate(context.user._id, args, {new: true });
+        return await User.findByIdAndUpdate(context.user._id, args, {new: true }).populate('equipment').
+        populate('characters').populate('user_stats');
       }
       throw new AuthenticationError('Not logged in')
     },
