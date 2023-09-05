@@ -14,6 +14,7 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard'
 import NewCharacter from './pages/NewCharacter'
 import Adventure from './pages/Adventure';
+import Header from './components/Header';
 import { AdventureProvider } from './utils/GlobalState';
 
 
@@ -41,6 +42,7 @@ function App() {
     <ApolloProvider client={client}>
         <Router>
           <div>
+            <Header />
             <AdventureProvider>
               <Routes>
                 <Route

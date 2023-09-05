@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery , useMutation} from '@apollo/client';
 
 import { useAdventureContext } from '../utils/GlobalState';
 import {
@@ -8,6 +8,7 @@ import {
   DELETE_CHARACTER
 } from '../utils/actions'
 import { QUERY_USER } from '../utils/queries';
+import { EDIT_USER } from '../utils/mutations';
 import { idbPromise } from '../utils/helpers';
 
 const Dashboard = () => {

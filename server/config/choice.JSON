@@ -1,0 +1,115 @@
+[
+  {
+    "_id": "1",
+    "choice": "Honk angirly",
+    "effect": "Neutral",
+    "chosen": true
+  },
+  {
+    "_id": "2",
+    "choice": "Recede into the woods",
+    "effect": "Negative",
+    "chosen": true
+  },{
+    "_id": "3",
+    "choice": "Ransack the vehicle",
+    "effect": "Positive",
+    "chosen": true
+  },{
+    "_id": "4",
+    "choice": "Waddle over to the inn and eatery",
+    "effect": "Neutral",
+    "chosen": true
+  },{
+    "_id": "5",
+      "choice": "Cozy…too cozy? Run away!",
+      "effect": "Neutral",
+      "chosen": true
+    },{
+      "_id": "6",
+      "choice": "Lie there like goose-droppings?",
+      "effect": "Negative",
+      "chosen": true
+    },{
+      "_id": "7",
+      "choice": "drag muddy body up",
+      "effect": "Neutral",
+      "chosen": true
+    },{
+      "_id": "8",
+      "choice": "Attack",
+      "effect": "Negative",
+      "chosen": true
+    },{
+      "_id": "9",
+      "choice": "Run",
+      "effect": "Negative",
+      "chosen": true
+    },{
+      "_id": "10",
+      "choice": "Escape before it is too late",
+      "effect": "Negative",
+      "chosen": true
+    },{
+      "_id": "11",
+      "choice": "Stay still as a bread loaf",
+      "effect": "Neutral",
+      "chosen": true
+    },{
+      "_id": "12",
+      "choice": "Join the foxes",
+      "effect": "Neuttral",
+      "chosen": true
+    },{
+      "_id": "13",
+      "choice": "Decline to join",
+      "effect": "Negative",
+      "chosen": true
+    },{
+      "_id": "14",
+      "choice": "Stand still",
+      "effect": "Neutral",
+      "chosen": true
+    },{
+      "_id": "15",
+      "choice": "Grab money, and vamoose",
+      "effect": "Negative",
+      "chosen": true
+    },{
+      "_id": "16",
+      "choice": "Beguile the fox with answer…",
+      "effect": "Neutral",
+      "chosen": true
+    },{
+      "_id": "17",
+      "choice": "Save the Stooges",
+      "effect": "Neutral",
+      "chosen": true
+    },
+    {
+      "_id": "18",
+      "choice": "Milk it...",
+      "effect": "Neutral",
+      "chosen": true
+    },{
+      "_id": "19",
+      "choice": "Loyalty",
+      "effect": "Negative",
+      "chosen": true
+    },{
+      "_id": "20",
+      "choice": "Humble pie",
+      "effect": "Negative",
+      "chosen": true
+    },{
+      "_id": "21",
+      "choice": "Nothing",
+      "effect": "Positive",
+      "chosen": true
+    },{
+      "_id": "22",
+      "choice": "love",
+      "effect": "Negative",
+      "chosen": true
+    }
+]

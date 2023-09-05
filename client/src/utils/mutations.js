@@ -94,22 +94,15 @@ export const UPDATE_USER_CHARACTER = gql`
 
 export const EDIT_USER =gql`
   mutation updateUser(
-    $name: String, 
-    $email: String, 
-    $password: String, 
     $stories:ID, 
     $equipment_id:ID, 
     $characters: ID
   ) {
     updateUser(
-      name: $String, 
-      email: $String, 
-      password: $String, 
       stories: $stories, 
       equipment_id: $eqipment_id, 
       characters: $characters
     ) {
-      _id
       name
       stories {
         _id
@@ -117,26 +110,19 @@ export const EDIT_USER =gql`
       equipment_id {
         _id
         ability
-        eq_stats {
-          _id
-          agility
-          attack
-          defense
-          hp
-        }
         equipment_name
       }
       characters {
         _id
         character_name
         healthpoints
-        ch_stats {
-          _id
-          agility
-          attack
-          defense
-          hp
-        }
+      }
+      user_stats{
+        _id
+        hp
+        attack
+        agility
+        defense
       }
     }
   }
