@@ -5,14 +5,14 @@ import { useAdventureContext } from '../utils/GlobalState';
 import {
   ADD_CHARACTER, UPDATE_USER
 } from '../utils/actions'
-import  { QUERY_USER } from '../utils/queries'
-import { UPDATE_USER_CHARACTER } from '../utils/mutations';
+import { UPDATE_USER_CHARACTER, UPDATE_USER_STORY } from '../utils/mutations';
 import { idbPromise } from '../utils/helpers'
 
 function StoryChoice ({choice}, player) {
   const [state, dispatch] = useAdventureContext();
 
-
+  const [ updateUserCharacter ] = useMutation(UPDATE_USER_CHARACTER)
+  const [ updateUserStory ] = useMutation(UPDATE_USER_STORY);
   const { user } = state;
   
 
@@ -61,10 +61,29 @@ function StoryChoice ({choice}, player) {
           if(user.equipment_id) user.equipment_id = null;
           else user.user_stats.hp--;
           break;
+        default:
+          console.log('nuteral');
+          break;
       }
+      const mutationResponse = await updateUserCharacter({
+        variables:{user_stats: user.user_stats._id}
+      })
+      if(mutationResponse){
+        console.log(mutationResponse)
+        dispatch({
+          type: UPDATE_USER,
+          user: mutationResponse.data.updateUserCharacter
+        });
+    
+        idbPromise('user', 'put', (mutationResponse.data.updateUserCharacter));
+      }
+      const mutationStory = await updateUserStory({
+        variables:{ stories: chosen.next_tale._id}
+      })
+      window.location.assign('/adventure');
     }
   }
-  console.log(user)
+  //console.log(user)
   return(
     <div> 
       <button onClick={() => handleNextStory(choice)}>{choice.option}</button>

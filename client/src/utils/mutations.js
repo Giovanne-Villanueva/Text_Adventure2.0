@@ -60,9 +60,37 @@ export const UPDATE_USER_STORY = gql`
   }
 `;
 
-/*export const UPDATE_CHARACTER = gql`
-
-`;*/
+export const UPDATE_USER_CHARACTER = gql`
+  mutation updateUserCharacter (
+    $user_stats: ID!
+  ){
+    updateUserCharacter(
+      user_stats: $user_stats
+    ){
+      name
+      stories {
+        _id
+      }
+      equipment_id {
+        _id
+        equipment_name
+        ability
+      }
+      characters {
+        _id
+        character_name
+        healthpoints
+      }
+      user_stats{
+        _id
+        hp
+        attack
+        agility
+        defense
+      }
+    }
+  }
+`;
 
 export const EDIT_USER =gql`
   mutation updateUser(

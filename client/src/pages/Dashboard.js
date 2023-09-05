@@ -22,8 +22,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     if(Object.hasOwn(state.user, 'name') ){
-      console.log('I got here')
-      console.log(user)
+      //console.log('I got here')
+      //console.log(user)
       setUserData(user);
     }
     else if (data) {
@@ -46,22 +46,29 @@ const Dashboard = () => {
   }
 
   const continueAdventure = () => {
-    if(user.stories._id){
-      <div>
-        <h3>Current Adventuer</h3>
-        <img></img>
-        <Link to={`/adventuer/${user.stories._id}`} className='continue'>Continue</Link>
-        <button className='delete' onClick={deleteCharacter}>Delete</button>
-      </div>
+    
+    if(user){
+      console.log(user)
+      if(user.stories){
+        return(
+          <div>
+            <h3>Current Adventuer</h3>
+            <img></img>
+            <Link to={`/adventure`} className='continue'>Continue</Link>
+            <button className='delete' onClick={deleteCharacter}>Delete</button>
+          </div>
+        )
+      }
+      
     }
   }
 
-  
+
   return(
   <div>
     <h2>Welcome, {user.name}!</h2>
       
-    {continueAdventure}
+    {continueAdventure()}
 
     <p>Just a warning if you begin a new story your current saved story will be lost</p>
     <Link to={"/newCharacter"}>Start a new Adventuer</Link>

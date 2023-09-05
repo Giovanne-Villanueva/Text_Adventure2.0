@@ -78,6 +78,13 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in')
     },
+    updateUserCharacter: async (parent, {user_stats}, context) => {
+      if(context.user){
+        return await User.findByIdAndUpdate(context.user._id, {user_stats: user_stats}, {new: true }).populate('equipment').
+        populate('characters').populate('user_stats');
+      }
+      throw new AuthenticationError('Not logged in')
+    },
     addCharacter: async (parent, args) => {
 
       const newcharacter = await Character.create( args );
