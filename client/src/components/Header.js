@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 function Header() {
   return (
     <nav className="bg-gray-800">
@@ -64,12 +66,12 @@ function Header() {
                 >
                   Home
                 </a>
-                <a
-                  href="/donations"
+                <Link
+                  to="/donations"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                 >
                   Donate
-                </a>
+                </Link>
                 <a
                   href="#"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
