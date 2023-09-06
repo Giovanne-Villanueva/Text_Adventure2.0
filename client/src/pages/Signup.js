@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { ADD_USER } from '../utils/mutations';
@@ -31,10 +32,16 @@ function Signup(props) {
     });
   };
 
+  if(Auth.loggedIn()){
+    return(
+      <Navigate to="/dashboard" replace={true}/>
+    );
+  }
+
   return (
     <div className="container flex flex-wrap flex-col justify-center content-center">
       
-
+      {}
       <h2 className='my-2 text-center text-base sm:text-xl'>Signup</h2>
       <form className='form w-5/6 md:w-1/2 xl:w-1/3' onSubmit={handleFormSubmit}>
         <div className="w-full rounded-t-md border-t-2 border-x-2 border-black">

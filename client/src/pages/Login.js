@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
 
@@ -16,6 +17,9 @@ function Login(props) {
       });
       const token = mutationResponse.data.login.token;
       Auth.login(token);
+      if(Auth.loggedIn()){
+        <Navigate to="/dashboard" replace={true}/>
+      }
     } catch (e) {
       console.log(e);
     }
@@ -28,6 +32,12 @@ function Login(props) {
       [name]: value,
     });
   };
+
+  if(Auth.loggedIn()){
+    return(
+      <Navigate to="/dashboard" replace={true}/>
+    );
+  }
 
   return (
     <div className="container flex flex-wrap flex-col justify-center content-center">

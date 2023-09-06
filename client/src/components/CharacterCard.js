@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useAdventureContext } from '../utils/GlobalState';
 
@@ -13,6 +14,8 @@ function CharacterCard ({ character }) {
   const [state, dispatch] = useAdventureContext();
 
   const [editUser] = useMutation(ADD_USER_CHARACTER);
+
+
 
   const chosenCharacter = async (chosen) => {
 
@@ -31,7 +34,7 @@ function CharacterCard ({ character }) {
     });
 
     //console.log(mutationResponse)
-    window.location.assign('/adventure')
+    //window.location.assign('/adventure')
   }
 
   return (
@@ -48,7 +51,7 @@ function CharacterCard ({ character }) {
             <li className='block w-full'>Defense Stat: {character.ch_stats.defense}</li>
             <li className='block w-full'>Agility Stat: {character.ch_stats.agility}</li>
         </ul>
-        <button className='w-full p-2 my-4 rounded-md bg-cyan-700' onClick={() => chosenCharacter(character)}  type="button">Choose</button>
+        <Link to="/adventure" className='w-full p-2 my-4 rounded-md bg-cyan-700' onClick={() => chosenCharacter(character)}  type="button">Choose</Link>
         </div>
     </div>
   );
