@@ -10,7 +10,7 @@ Developing this text adventure game came with many challenges as this is our fir
 
 1.) You start by either making an account or logging in. Home Page 2.) If you do not have an account you enter a username, email and password. Sign up form 3.) Finally you log in and start your taken to the user dashboard. User Dashboard
 
-![Dashboard](/images/Dashboard.png)
+![Dashboard](./images/Dashboard.png)
 
 At your dashboard you able to start a new adventure or continue an existing one. If the user does not have a current adventure in progress we just leave a blank space there. Users are limited to one adventure at time. If the user attempts to start a new adventure with a current one in progress the adventure in progress is deleted.
 
