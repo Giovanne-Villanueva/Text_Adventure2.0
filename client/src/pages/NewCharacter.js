@@ -34,9 +34,11 @@ function NewCharacter() {
   return(
     <div>
       <h2 className='text-base sm:text-xl md:text-2xl' >Choose A Character:</h2>
+      <div className='grid grid-cols-2 gap-2 justify-center content-center mt-2 md:flex-row'>
       {characterData.map((character) =>( 
         <CharacterCard key={character._id} character={character} />
       ))}
+      </div>
     </div>
   );
 };

@@ -38,10 +38,10 @@ function CharacterCard ({ character }) {
   }
 
   return (
-    <div className='flex flex-col flex-wrap justify-center content-center mt-2 md:flex-row'>
-        <div className='flex flex-col content-center md:w-2/6 md:mx-6'>
+    
+        <div className='grid grid-span-1 flex flex-col content-center md:w-2/6 md:mx-6'>
+          <img  src={`/images/${character.character_name}.jpg`} />
           <h2>
-            <img src={`/images/${character.character_name}.jpg`} />
             {character.character_name}
           </h2>
           <ul className='flex flex-col text-sm sm:text-base md:text-lg'>
@@ -51,9 +51,8 @@ function CharacterCard ({ character }) {
             <li className='block w-full'>Defense Stat: {character.ch_stats.defense}</li>
             <li className='block w-full'>Agility Stat: {character.ch_stats.agility}</li>
         </ul>
-        <Link to="/adventure" className='w-full p-2 my-4 rounded-md bg-cyan-700' onClick={() => chosenCharacter(character)}  type="button">Choose</Link>
+        <Link to="/adventure" className='text-white text-center w-full p-2 my-4 rounded-md bg-cyan-700' onClick={() => chosenCharacter(character)}  type="button">Choose</Link>
         </div>
-    </div>
   );
 }
 
