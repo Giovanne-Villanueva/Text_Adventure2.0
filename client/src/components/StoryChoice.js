@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { useAdventureContext } from '../utils/GlobalState';
-import { useNavigate, redirect } from 'react-router-dom';
+import { useNavigate, redirect, useHref } from 'react-router-dom';
 
 import {
   ADD_CHARACTER, UPDATE_USER
@@ -16,8 +16,9 @@ function StoryChoice ({choice}, player) {
   const [ updateUserStory ] = useMutation(UPDATE_USER_STORY);
   const { user } = state;
   
-  const refresh = useNavigate();
-  
+  const navigate = useNavigate();
+  const url = useHref();
+
   useEffect(()=>{
     if(player.user){
       idbPromise('user', 'getSingle', {name: player.user.name}).then((indexedUser) => {
@@ -50,7 +51,7 @@ function StoryChoice ({choice}, player) {
           }
 
           if((user.character.healthpoints + user.user_stats.hp) <= 0){
-            return refresh('/ending');
+            return navigate('/ending');
           }
           break;
 
@@ -83,8 +84,8 @@ function StoryChoice ({choice}, player) {
       const mutationStory = await updateUserStory({
         variables:{ stories: chosen.next_tale._id}
       })
-      //window.location.assign("/adventure")
-      return refresh(0);
+      window.location.assign(url)
+      //return navigate(0).match;
      // return redirect('/adventure')
     }
   }
