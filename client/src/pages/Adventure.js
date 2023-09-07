@@ -45,7 +45,7 @@ const Adventure = () => {
   }, [user, userData.data, dispatch]);
 
   useEffect(()=>{
-    
+    //console.log(data)
     if(data){
       dispatch({
         type: UPDATE_STORY,
@@ -63,6 +63,7 @@ const Adventure = () => {
       if(user.stories){
         setCurrentUser(user)
         if(user.stories._id){
+          //console.log(user.stories)
           getStory({
             variables:{_id:user.stories._id}
           })
@@ -82,9 +83,9 @@ const Adventure = () => {
         stories: story.data.firstStory
       })
       idbPromise('stories', 'put', (story.data.firstStory))
-      firstStory(story.data.firstStory)
+      //firstStory(story.data.firstStory)
     }
-    async function firstStory(next_tale){
+    /*async function firstStory(next_tale){
       const mutationResponse = await updateUserStory({
         variables:{stories: next_tale._id}
       })
@@ -96,8 +97,8 @@ const Adventure = () => {
     
         idbPromise('user', 'put', (mutationResponse.data.updateUserStory));
       }
-    }
-  }, [story.data, story.loading, dispatch, updateUserStory])
+    }*/
+  }, [story.data, story.loading, dispatch])
 
 
   const handleNextStory = async (chosen) => {
@@ -132,7 +133,7 @@ const Adventure = () => {
         case 'negative':
           //lose either health points or an equipment item
           if(currentUser.equipment_id) currentUser.equipment_id = null;
-          else currentStory.user_stats.hp--;
+          else currentUser.user_stats.hp--;
           break;
         default:
           console.log('nuteral');
@@ -207,7 +208,7 @@ const Adventure = () => {
 
   //console.log(user)
   if(currentStory.choices){
-    //console.log(currentStory.choices)
+    //console.log(currentStory)
     return(
       <div className='container mx-auto grid grid-cols-2 rounded-md my-10 p-2'>
         <p className='col-span-2 m-5'>{currentStory.tale}</p>
