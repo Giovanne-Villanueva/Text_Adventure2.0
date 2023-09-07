@@ -17,7 +17,7 @@ function StoryChoice ({choice}, player) {
   const { user } = state;
   
   const navigate = useNavigate();
-  const url = useHref();
+  //const url = useHref();
 
   useEffect(()=>{
     if(player.user){
@@ -34,7 +34,7 @@ function StoryChoice ({choice}, player) {
   const handleNextStory = async (chosen) => {
     
     if(user) {
-      console.log(user.user_stats)
+      //console.log(user.user_stats)
       switch(chosen.effect){
         case 'fight':
           //lose some healthpoints and determine wither you die or survive
@@ -73,7 +73,7 @@ function StoryChoice ({choice}, player) {
         variables:{user_stats: user.user_stats._id}
       })
       if(mutationResponse){
-        console.log(mutationResponse)
+        //console.log(mutationResponse)
         dispatch({
           type: UPDATE_USER,
           user: mutationResponse.data.updateUserCharacter
@@ -84,8 +84,8 @@ function StoryChoice ({choice}, player) {
       const mutationStory = await updateUserStory({
         variables:{ stories: chosen.next_tale._id}
       })
-      window.location.assign(url)
-      //return navigate(0).match;
+      //window.location.assign(url)
+      return navigate('/adventure',{replace:true});
      // return redirect('/adventure')
     }
   }
