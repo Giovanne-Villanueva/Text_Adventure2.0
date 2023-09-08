@@ -20,7 +20,8 @@ export const reducer = (state, action) => {
         user: 
           {
             ...state.user,
-            characters: action.characters._id
+            characters: action.characters,
+            user_stats: action.characters.ch_stats
           } ,
         characters: action.characters
       }

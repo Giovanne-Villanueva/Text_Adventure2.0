@@ -78,7 +78,7 @@ const Dashboard = () => {
           <div>
             <h3>Current Adventuer</h3>
             <img></img>
-            <Link to={`/adventure`} className='continue text- white w-full sm:w-1/2 md:w-1/3 xl:w-1/4 p-2 rounded-md my-3 mr-2 bg-cyan-700'>Continue</Link>
+            <Link to={`/adventure`} className='continue text-white w-full sm:w-1/2 md:w-1/3 xl:w-1/4 p-2 rounded-md my-3 mr-2 bg-cyan-700'>Continue</Link>
             <button className='delete w-full sm:w-max p-2 rounded-md my-3 mx-2 bg-cyan-700' onClick={deleteCharacter}>Delete</button>
           </div>
         )

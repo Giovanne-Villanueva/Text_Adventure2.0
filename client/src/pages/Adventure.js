@@ -20,7 +20,7 @@ const Adventure = () => {
   const [currentStory, setCurrentStory] = useState({})
   const [currentUser, setCurrentUser] = useState({})
 
-  const userData = useQuery(QUERY_USER);
+  const [getUser, userData] = useLazyQuery(QUERY_USER);
   const [getStory, {data, loading}] = useLazyQuery(QUERY_STORY);
   const [getFirstStory, story] = useLazyQuery(QUERY_FIRST_STORY)
 
@@ -31,6 +31,16 @@ const Adventure = () => {
   const {user, stories}=state;
   
   useEffect(()=>{
+    getUser({})
+    
+    console.log(stories)
+    console.log(user)
+    console.log('------------------------------------------------')
+    console.log(currentStory)
+    console.log(currentUser)
+  },[]);
+
+  useEffect(()=>{
     
   
     if (userData.data) {
@@ -40,9 +50,10 @@ const Adventure = () => {
       });
 
       idbPromise('user', 'put', (userData.data.user));
+      console.log(userData)
     }
 
-  }, [user, userData.data, dispatch]);
+  }, []);
 
   useEffect(()=>{
     //console.log(data)
@@ -54,12 +65,12 @@ const Adventure = () => {
       idbPromise('stories', 'put', (data.story))
       setCurrentStory(data.story)
     }
-  }, [stories, data, dispatch]);
+  }, [data, dispatch]);
 
   useEffect(()=>{
     
     if(user){
-      //console.log(user)
+      console.log(user)
       if(user.stories){
         setCurrentUser(user)
         if(user.stories._id){
@@ -84,6 +95,8 @@ const Adventure = () => {
       })
       idbPromise('stories', 'put', (story.data.firstStory))
       //firstStory(story.data.firstStory)
+      console.log(story)
+      setCurrentStory(story.data.firstStory)
     }
     /*async function firstStory(next_tale){
       const mutationResponse = await updateUserStory({
@@ -158,6 +171,15 @@ const Adventure = () => {
         }
       }
       else{
+        dispatch({
+          type: UPDATE_USER,
+          user: null
+        });
+
+        dispatch({
+          type:UPDATE_STORY,
+          stories: null
+        })
         navigate('/ending')
       }
       //console.log(user)
