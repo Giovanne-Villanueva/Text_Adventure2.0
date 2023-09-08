@@ -143,17 +143,22 @@ const Adventure = () => {
         variables:{user_stats: currentUser.user_stats._id}
       })
       
-      const mutationStory = await updateUserStory({
-        variables:{ stories: chosen.next_tale._id}
-      })
-      if(mutationStory){
-        //console.log(mutationResponse)
-        dispatch({
-          type: UPDATE_USER,
-          user: mutationStory.data.updateUserStory
-        });
-    
-        idbPromise('user', 'put', (mutationStory.data.updateUserStory));
+      if(chosen.next_tale){
+        const mutationStory = await updateUserStory({
+          variables:{ stories: chosen.next_tale._id}
+        })
+        if(mutationStory){
+          //console.log(mutationResponse)
+          dispatch({
+            type: UPDATE_USER,
+            user: mutationStory.data.updateUserStory
+          });
+      
+          idbPromise('user', 'put', (mutationStory.data.updateUserStory));
+        }
+      }
+      else{
+        navigate('/ending')
       }
       //console.log(user)
       //window.location.assign(url)
